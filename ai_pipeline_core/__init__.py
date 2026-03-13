@@ -17,6 +17,7 @@ if "prefect" in sys.modules and get_current_settings().cloud.enable_orchestratio
     refresh_global_settings_context()
 
 from . import llm
+from ._codec import CodecCycleError, CodecError, CodecImportError, EncodeResult, EnumDecodeError, SerializedError, UniversalCodec
 from .database import DatabaseReader
 from .deployment import DeploymentResult, PipelineDeployment
 from .deployment.remote import RemoteDeployment
@@ -24,8 +25,6 @@ from .documents import (
     Attachment,
     Document,
     DocumentSha256,
-    RunContext,
-    RunScope,
     ensure_extension,
     find_document,
     is_document_sha256,
@@ -51,7 +50,7 @@ from .llm import (
     ToolCallRecord,
     ToolOutput,
 )
-from .logging import (
+from .logger import (
     LoggingConfig,
     get_pipeline_logger,
     setup_logging,
@@ -62,6 +61,10 @@ from .pipeline import (
     PipelineFlow,
     PipelineLimit,
     PipelineTask,
+    RunContext,
+    SpanContext,
+    SpanMetrics,
+    SpanSink,
     TaskBatch,
     TaskHandle,
     as_task_completed,
@@ -72,8 +75,11 @@ from .pipeline import (
     run_tasks_until,
     safe_gather,
     safe_gather_indexed,
+    traced_operation,
+    track_span,
 )
 from .prompt_compiler import Guide, MultiLineField, OutputRule, OutputT, PromptSpec, Role, Rule, render_preview, render_text
+from .replay import ExperimentOverrides, ExperimentResult, execute_span, experiment_batch, experiment_span
 from .settings import Settings
 from .testing import disable_run_logger, prefect_test_harness
 
@@ -82,6 +88,9 @@ __version__ = importlib.metadata.version("ai-pipeline-core")
 __all__ = [
     "Attachment",
     "Citation",
+    "CodecCycleError",
+    "CodecError",
+    "CodecImportError",
     "Conversation",
     "ConversationContent",
     "DatabaseReader",
@@ -91,6 +100,10 @@ __all__ = [
     "DocumentSha256",
     "DocumentSizeError",
     "DocumentValidationError",
+    "EncodeResult",
+    "EnumDecodeError",
+    "ExperimentOverrides",
+    "ExperimentResult",
     "FlowOptions",
     "Guide",
     "LLMError",
@@ -112,18 +125,25 @@ __all__ = [
     "Role",
     "Rule",
     "RunContext",
-    "RunScope",
+    "SerializedError",
     "Settings",
+    "SpanContext",
+    "SpanMetrics",
+    "SpanSink",
     "TaskBatch",
     "TaskHandle",
     "TokenUsage",
     "Tool",
     "ToolCallRecord",
     "ToolOutput",
+    "UniversalCodec",
     "as_task_completed",
     "collect_tasks",
     "disable_run_logger",
     "ensure_extension",
+    "execute_span",
+    "experiment_batch",
+    "experiment_span",
     "find_document",
     "get_pipeline_logger",
     "get_run_id",
@@ -140,4 +160,6 @@ __all__ = [
     "safe_gather_indexed",
     "sanitize_url",
     "setup_logging",
+    "traced_operation",
+    "track_span",
 ]

@@ -499,7 +499,7 @@ def test_discover_all_specs_suppresses_syntax_warnings(tmp_path: Path, capsys: p
     (pkg / "__init__.py").write_text("", encoding="utf-8")
     # Module that references PromptSpec and contains a non-raw string with invalid escape
     (pkg / "spec.py").write_text(
-        'from ai_pipeline_core.prompt_compiler import PromptSpec\nx = "test\\.pattern"\n',
+        'from ai_pipeline_core.prompt_compiler import PromptSpec\nx = r"test\\.pattern"\n',
         encoding="utf-8",
     )
 
